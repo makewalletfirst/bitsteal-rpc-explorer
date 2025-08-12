@@ -1,8 +1,6 @@
 include ./includes/shared-mixins.pug
 include ./includes/tx-mixins.pug
 
-- var siteTitle = 'Bitsteal Explorer'
-
 doctype html
 html(lang="en")
 	head
@@ -66,7 +64,7 @@ html(lang="en")
 							img.header-image(src=assetUrl("./img/network-mainnet/logo.svg"), alt="logo")
 
 						if (coinConfig.siteTitlesByNetwork && coinConfig.siteTitlesByNetwork[activeBlockchain])
-							span.fw-light #{siteTitle}
+							span.fw-light #{coinConfig.siteTitlesByNetwork[activeBlockchain]}
 						else
 							span.fw-light Bitsteal Explorer
 
