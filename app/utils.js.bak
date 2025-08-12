@@ -555,44 +555,6 @@ function identifyMiner(coinbaseTx, blockHeight) {
 		return null;
 	}
 	
-	//변경 추가점
-	    // --- Bitsteal 전용: 화이트리스트 주소만 라벨 ---
-    const ALLOWLIST = {
-        "bc1q6wvmr7nx4vdx0kuheq7da36scc9cuekv6zrkl7": { name: "Bitsteal Miner" }
-        // 필요하면 다른 주소도 추가
-    };
-
-    let payoutAddress = null;
-    if (coinbaseTx.vout && coinbaseTx.vout.length > 0) {
-        for (let i = 0; i < coinbaseTx.vout.length; i++) {
-            const vout = coinbaseTx.vout[i];
-            if (vout.value > 0) {
-                const addr = getVoutAddress(vout);
-                if (addr) {
-                    payoutAddress = addr;
-                    break;
-                }
-            }
-        }
-    }
-
-    if (payoutAddress && ALLOWLIST[payoutAddress]) {
-        const minerInfo = Object.assign({}, ALLOWLIST[payoutAddress]);
-        minerInfo.identifiedBy = "allowlisted payout address " + payoutAddress;
-        return minerInfo;
-    }
-
-    if (payoutAddress) {
-        return {
-            name: "Unknown",
-            type: "unknown",
-            identifiedBy: "unregistered payout address " + payoutAddress
-        };
-    }
-    // --- Bitsteal 전용 끝 ---
-
-
-
 	if (global.miningPoolsConfigs) {
 		for (let i = 0; i < global.miningPoolsConfigs.length; i++) {
 			let miningPoolsConfig = global.miningPoolsConfigs[i];
